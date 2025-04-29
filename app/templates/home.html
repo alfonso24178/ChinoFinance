@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Inicio - ChinoFinance{% endblock %}
+{% block content %}
+<div class="text-center">
+    <h1 class="display-4">Bienvenido a ChinoFinance</h1>
+    <p class="lead">Tu asistente para organizar tus finanzas y ahorrar rumbo al Buen Fin 2025.</p>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('main.nuevo_ingreso') }}" class="btn btn-success btn-lg w-100">Registrar Ingreso</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('main.nuevo_egreso') }}" class="btn btn-danger btn-lg w-100">Registrar Egreso</a>
+        </div>
+        <div class="col-md-4 mb-3">
+            <a href="{{ url_for('main.nueva_meta') }}" class="btn btn-primary btn-lg w-100">Crear Meta</a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('main.ver_metas') }}" class="btn btn-outline-primary btn-lg w-100">Ver Metas</a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('main.dashboard') }}" class="btn btn-outline-dark btn-lg w-100">Ir al Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

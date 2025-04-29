@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Ver Egresos{% endblock %}
+{% block content %}
+    <h2>Mis Egresos</h2>
+
+    {% if egresos %}
+        <ul class="list-group">
+            {% for egreso in egresos %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <strong>{{ egreso.descripcion }}</strong> — ${{ egreso.cantidad }}
+                    </div>
+                    <div>
+                        <a href="{{ url_for('main.editar_egreso', egreso_id=egreso.id) }}" class="btn btn-sm btn-outline-warning">Editar</a>
+                        <form action="{{ url_for('main.eliminar_egreso', egreso_id=egreso.id) }}" method="POST" style="display:inline;">
+                            <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Seguro que deseas eliminar este egreso?');">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="alert alert-info">No tienes egresos registrados.</div>
+    {% endif %}
+{% endblock %}

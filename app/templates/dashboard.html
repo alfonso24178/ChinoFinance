@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+    <h2>Dashboard Financiero</h2>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card text-bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Ingresos Totales</h5>
+                    <p class="card-text fs-4">${{ total_ingresos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-danger mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Egresos Totales</h5>
+                    <p class="card-text fs-4">${{ total_egresos }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-bg-info mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Balance</h5>
+                    <p class="card-text fs-4">${{ balance }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if labels %}
+        <div class="card mb-4">
+            <div class="card-body">
+                <canvas id="graficaBalance" height="100"></canvas>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <canvas id="graficaIngresos" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <canvas id="graficaEgresos" height="100"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            const labels = {{ labels | tojson }};
+            const ingresosData = {{ ingresos_data | tojson }};
+            const egresosData = {{ egresos_data | tojson }};
+            const balanceData = {{ balance_data | tojson }};
+
+            // Balance
+            new Chart(document.getElementById('graficaBalance'), {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Balance Mensual',
+                        data: balanceData,
+                        borderColor: 'blue',
+                        backgroundColor: 'rgba(0, 0, 255, 0.2)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                }
+            });
+
+            // Ingresos
+            new Chart(document.getElementById('graficaIngresos'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Ingresos Mensuales',
+                        data: ingresosData,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                    }]
+                }
+            });
+
+            // Egresos
+            new Chart(document.getElementById('graficaEgresos'), {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Egresos Mensuales',
+                        data: egresosData,
+                        backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                    }]
+                }
+            });
+        </script>
+    {% else %}
+        <div class="alert alert-info text-center">
+            Aún no hay datos suficientes para mostrar gráficas.<br>
+            ¡Agrega tus primeros ingresos o egresos!
+        </div>
+    {% endif %}
+{% endblock %}

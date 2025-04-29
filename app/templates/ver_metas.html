@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Ver Metas{% endblock %}
+{% block content %}
+    <h2>Mis Metas de Ahorro</h2>
+
+    {% if metas %}
+        <div class="row">
+            {% for meta in metas %}
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ meta.nombre }}</h5>
+                            <p class="card-text">
+                                Objetivo: ${{ meta.cantidad_objetivo }}<br>
+                                Ahorrado: ${{ meta.cantidad_actual }}<br>
+                                Faltan: ${{ meta.cantidad_objetivo - meta.cantidad_actual }}<br>
+                                {% if meta.fecha_limite %}
+                                    Fecha límite: {{ meta.fecha_limite.strftime('%d/%m/%Y') }}
+                                {% endif %}
+                            </p>
+                    
+                            <!-- 🔥 Aquí los botones -->
+                            <div class="d-flex justify-content-between mt-3">
+                                <a href="{{ url_for('main.editar_meta', meta_id=meta.id) }}" class="btn btn-sm btn-outline-warning">Editar</a>
+                    
+                                <form action="{{ url_for('main.eliminar_meta', meta_id=meta.id) }}" method="POST" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Seguro que deseas eliminar esta meta?');">Eliminar</button>
+                                </form>
+                            </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">No has creado ninguna meta todavía.</div>
+    {% endif %}
+
+    <a href="{{ url_for('main.nueva_meta') }}" class="btn btn-primary">+ Crear nueva meta</a>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block title %}Historial Mensual{% endblock %}
+{% block content %}
+    <h2>Historial Financiero Mensual</h2>
+
+    {% if historial %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Mes/Año</th>
+                    <th>Ingresos</th>
+                    <th>Egresos</th>
+                    <th>Balance</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fecha, data in historial.items() %}
+                    <tr>
+                        <td>{{ fecha }}</td>
+                        <td>${{ "%.2f"|format(data.get('ingresos', 0)) }}</td>
+                        <td>${{ "%.2f"|format(data.get('egresos', 0)) }}</td>
+                        <td>
+                            {% if data.balance >= 0 %}
+                                <span class="text-success">${{ "%.2f"|format(data.balance) }}</span>
+                            {% else %}
+                                <span class="text-danger">${{ "%.2f"|format(data.balance) }}</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">Aún no hay registros suficientes.</div>
+    {% endif %}
+{% endblock %}

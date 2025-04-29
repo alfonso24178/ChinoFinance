@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Nueva Meta de Ahorro{% endblock %}
+{% block content %}
+    <h2>Crear Nueva Meta de Ahorro</h2>
+    <form method="POST" class="mt-3">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.nombre.label(class="form-label") }}
+            {{ form.nombre(class="form-control") }}
+            {% for error in form.nombre.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.cantidad_objetivo.label(class="form-label") }}
+            {{ form.cantidad_objetivo(class="form-control") }}
+            {% for error in form.cantidad_objetivo.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.fecha_limite.label(class="form-label") }}
+            {{ form.fecha_limite(class="form-control") }}
+        </div>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+{% endblock %}

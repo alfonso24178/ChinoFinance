@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Nuevo Ingreso{% endblock %}
+{% block content %}
+    <h2>Registrar Ingreso</h2>
+    <form method="POST" class="mt-3">
+        {{ form.hidden_tag() }}
+
+        <div class="mb-3">
+            {{ form.descripcion.label(class="form-label") }}
+            {{ form.descripcion(class="form-control") }}
+            {% for error in form.descripcion.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        <div class="mb-3">
+            {{ form.cantidad.label(class="form-label") }}
+            {{ form.cantidad(class="form-control") }}
+            {% for error in form.cantidad.errors %}
+                <div class="text-danger small">{{ error }}</div>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class="btn btn-success") }}
+    </form>
+{% endblock %}
